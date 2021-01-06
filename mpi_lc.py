@@ -9,7 +9,7 @@ comm_size = comm.Get_size()
 
 leng = (comm_size)*3
 if comm_rank == 0:
-    data = range(leng)#data = np.arange(leng, dtype='i')
+    data = [i for i in range(leng)]#data = range(leng)#data = np.arange(leng, dtype='i')
     print("data = ", data)
     rec_sum = [0]*(comm_size)#rec_sum = np.zeros((comm_size-1), dtype='i')
 else:
