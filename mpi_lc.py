@@ -10,7 +10,7 @@ comm_size = comm.Get_size()
 leng = (comm_size)*3
 if comm_rank == 0:
     data = np.arange(leng, dtype='i')#data = [i for i in range(leng)]#data = range(leng)#
-    print("data = ", data)
+    print("data = %s" % data)
     rec_sum = [0]*(comm_size)#rec_sum = np.zeros((comm_size), dtype='i')
 else:
     data = None
@@ -36,12 +36,12 @@ print("Gather: rank %d has %s" % (comm_rank, rec_sum))
 #combine_data = comm.gather(local_sum, root=0)
 if comm_rank == 0:
     all_sum = sum(rec_sum)
-    print("all_sum =", all_sum)
+    print("all_sum = %d" % all_sum)
 else:
     all_sum = None
 
-"""
+
 # scatter the final sum to each user
 all_sum_local = comm.scatter(all_sum, root=0)
 print('rank %d receive sum = %s' % (comm_rank, all_sum_local))
-"""
+
