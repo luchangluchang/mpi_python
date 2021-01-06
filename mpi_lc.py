@@ -27,7 +27,7 @@ print("local_sum = %d" % local_sum)
 #gather
 rec_sum = comm.gather(local_sum, root=0)
 #comm.Gather(local_sum, rec_sum, root=0)
-print("Gather: rank %d has %s \n" % (comm_rank, rec_sum))
+print("Gather: rank %d has %s" % (comm_rank, rec_sum))
 
 #local_data = comm.Scatter(data, MPI.IN_PLACE, root=0)
 #local_sum = sum(local_data)
@@ -44,5 +44,5 @@ else:
 # scatter the final sum to each user
 #all_sum_local = comm.scatter(all_sum, root=0)
 all_sum_local = comm.bcast(all_sum if comm_rank == 0 else None, root=0)
-print('rank %d receive sum = %s \n' % (comm_rank, all_sum_local))
+print('rank %d receive sum = %s' % (comm_rank, all_sum_local))
 
