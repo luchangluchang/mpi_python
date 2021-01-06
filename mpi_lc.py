@@ -17,7 +17,7 @@ else:
     rec_sum = None
 
 #scatter
-local_data = np.zeros(len(data)/(comm_size-1), dtype='i')
+local_data = np.zeros(leng/(comm_size-1), dtype='i')
 if comm_rank == 0:
     comm.Scatter(data, MPI.IN_PLACE, root=0)
     local_sum = None
