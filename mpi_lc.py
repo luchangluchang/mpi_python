@@ -25,7 +25,8 @@ local_sum = sum(local_data)
 print("local_sum =", local_sum)
 
 #gather
-comm.Gather(local_sum, rec_sum, root=0)
+rec_sum = comm.gather(local_sum, root=0)
+#comm.Gather(local_sum, rec_sum, root=0)
 print("Gather: rank %d has %s" % (comm_rank, rec_sum))
 
 #local_data = comm.Scatter(data, MPI.IN_PLACE, root=0)
