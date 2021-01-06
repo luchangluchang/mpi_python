@@ -11,7 +11,7 @@ leng = (comm_size)*2
 if comm_rank == 0:
     data = np.arange(leng, dtype='i')#data = [i for i in range(leng)]#data = range(leng)#
     print("data = ", data)
-    rec_sum = np.zeros((comm_size), dtype='i')#rec_sum = [0]*(comm_size)#
+    rec_sum = [0]*(comm_size)#rec_sum = np.zeros((comm_size), dtype='i')
 else:
     data = None
     rec_sum = None
