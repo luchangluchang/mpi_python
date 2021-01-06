@@ -9,15 +9,15 @@ comm_size = comm.Get_size()
 
 leng = (comm_size-1)*3
 if comm_rank == 0:
-    data = np.arange(leng, dtype='i')#data = range(leng)
+    data = range(leng)#data = np.arange(leng, dtype='i')
     print("data = ", data)
-    rec_sum = np.zeros((comm_size-1), dtype='i')
+    rec_sum = [0]*(comm_size-1)#rec_sum = np.zeros((comm_size-1), dtype='i')
 else:
     data = None
     rec_sum = None
 
 #scatter
-local_data = np.zeros(leng/(comm_size-1), dtype='i')
+local_data = [0]*leng/(comm_size-1)#local_data = np.zeros(leng/(comm_size-1), dtype='i')
 if comm_rank == 0:
     comm.Scatter(data, MPI.IN_PLACE, root=0)
     local_sum = None
