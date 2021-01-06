@@ -1,4 +1,4 @@
-#mpi 加和进程实现
+#mpi
 import numpy as np
 #import mpi4py.MPI as MPI
 from mpi4py import MPI
@@ -16,10 +16,10 @@ else:
     rec_sum = None
 
 #scatter
-local_data = np.zeros(len(data)/(comm_size-1), dtype='i')# 此处长度不整除时有问题
+local_data = np.zeros(len(data)/(comm_size-1), dtype='i')
 if comm_rank == 0:
     comm.Scatter(data, MPI.IN_PLACE, root=0)
-    local_sum = None#无用，优化后可删除
+    local_sum = None
 else:
     comm.Scatter(data, local_data, root=0)
     local_sum = sum(local_data)
