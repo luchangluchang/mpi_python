@@ -17,7 +17,7 @@ else:
     rec_sum = None
 
 #scatter
-local_data = [0]*leng/(comm_size)#local_data = np.zeros(leng/(comm_size-1), dtype='i')
+local_data = [0]*(leng/(comm_size))#local_data = np.zeros(leng/(comm_size-1), dtype='i')
 comm.Scatter(data, local_data, root=0)
 print("Scatter: rank %d has %s" % (comm_rank, local_data))
 local_sum = sum(local_data)
