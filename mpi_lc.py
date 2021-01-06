@@ -9,16 +9,17 @@ comm_size = comm.Get_size()
 
 leng = (comm_size)*3
 if comm_rank == 0:
-    data = [i for i in range(leng)]#data = range(leng)#data = np.arange(leng, dtype='i')
+    data = np.arange(leng, dtype='i')#data = [i for i in range(leng)]#data = range(leng)#
     print("data = ", data)
-    rec_sum = [0]*(comm_size)#rec_sum = np.zeros((comm_size-1), dtype='i')
+    rec_sum = np.zeros((comm_size), dtype='i')#rec_sum = [0]*(comm_size)#
 else:
     data = None
     rec_sum = None
 
 #scatter
-local_data = [0]*(leng/(comm_size))#local_data = np.zeros(leng/(comm_size-1), dtype='i')
-local_data = comm.scatter(data, root=0)
+local_data = np.zeros(leng/comm_size, dtype='i')#local_data = [0]*(leng/(comm_size))#
+#local_data = comm.scatter(data, root=0)
+comm.Scatter(data, local_data, root=2)
 print("Scatter: rank %d has %s" % (comm_rank, local_data))
 local_sum = sum(local_data)
 print("local_sum =", local_sum)
