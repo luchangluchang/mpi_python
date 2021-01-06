@@ -7,7 +7,7 @@ comm = MPI.COMM_WORLD
 comm_rank = comm.Get_rank()
 comm_size = comm.Get_size()
 
-leng = (comm_size)*2
+leng = (comm_size)*3
 if comm_rank == 0:
     data = np.arange(leng, dtype='i')#data = [i for i in range(leng)]#data = range(leng)#
     print("data = ", data)
@@ -22,7 +22,7 @@ local_data = np.zeros(leng/comm_size, dtype='i')#local_data = [0]*(leng/(comm_si
 comm.Scatter(data, local_data, root=0)
 print("Scatter: rank %d has %s" % (comm_rank, local_data))
 local_sum = sum(local_data)
-print("local_sum =", local_sum)
+print("local_sum = %d" % local_sum)
 
 #gather
 rec_sum = comm.gather(local_sum, root=0)
