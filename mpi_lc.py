@@ -7,32 +7,25 @@ comm = MPI.COMM_WORLD
 comm_rank = comm.Get_rank()
 comm_size = comm.Get_size()
 
-leng = (comm_size-1)*3
+leng = (comm_size)*3
 if comm_rank == 0:
     data = range(leng)#data = np.arange(leng, dtype='i')
     print("data = ", data)
-    rec_sum = [0]*(comm_size-1)#rec_sum = np.zeros((comm_size-1), dtype='i')
+    rec_sum = [0]*(comm_size)#rec_sum = np.zeros((comm_size-1), dtype='i')
 else:
     data = None
     rec_sum = None
 
 #scatter
-local_data = [0]*leng/(comm_size-1)#local_data = np.zeros(leng/(comm_size-1), dtype='i')
-if comm_rank == 0:
-    comm.Scatter(data, MPI.IN_PLACE, root=0)
-    local_sum = None
-else:
-    comm.Scatter(data, local_data, root=0)
-    local_sum = sum(local_data)
-print('Scatter: rank %d has %s with MPI.IN_PLACE' % (comm_rank, local_data))
+local_data = [0]*leng/(comm_size)#local_data = np.zeros(leng/(comm_size-1), dtype='i')
+comm.Scatter(data, local_data, root=0)
+print("Scatter: rank %d has %s" % (comm_rank, local_data))
+local_sum = sum(local_data)
 print("local_sum =", local_sum)
 
 #gather
-if comm_rank == 0:
-    comm.Gather(MPI.IN_PLACE, rec_sum, root=0)
-else:
-    comm.Gather(local_sum, rec_sum, root=0)
-print('Gather: rank %d has %s with MPI.IN_PLACE' % (comm_rank, rec_sum))
+comm.Gather(local_sum, rec_sum, root=0)
+print("Gather: rank %d has %s" % (comm_rank, rec_sum))
 
 #local_data = comm.Scatter(data, MPI.IN_PLACE, root=0)
 #local_sum = sum(local_data)
@@ -45,6 +38,8 @@ if comm_rank == 0:
 else:
     all_sum = None
 
+"""
 # scatter the final sum to each user
 all_sum_local = comm.scatter(all_sum, root=0)
 print('rank %d receive sum = %s' % (comm_rank, all_sum_local))
+"""
