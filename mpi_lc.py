@@ -7,9 +7,9 @@ comm = MPI.COMM_WORLD
 comm_rank = comm.Get_rank()
 comm_size = comm.Get_size()
 
+leng = (comm_size-1)*3
 if comm_rank == 0:
-    data = range((comm_size-1)*3)
-    leng = len(data)
+    data = range(leng)
     print("data = ", data)
     rec_sum = np.zeros((comm_size-1), dtype='i')
 else:
