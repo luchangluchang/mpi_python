@@ -42,6 +42,7 @@ else:
 
 
 # scatter the final sum to each user
-all_sum_local = comm.scatter(int(all_sum), root=0)
+#all_sum_local = comm.scatter(all_sum, root=0)
+all_sum_local = comm.bcast(all_sum if comm_rank == 0 else None, root=0)
 print('rank %d receive sum = %s' % (comm_rank, all_sum_local))
 
